@@ -1,0 +1,35 @@
+[Unit]
+Description=LinuxAI Core System Service
+Documentation=man:ai-system(8)
+After=network.target sound.target
+Wants=network.target
+DefaultDependencies=false
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/ai-system --daemon
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+Restart=always
+RestartSec=1
+TimeoutStopSec=30
+User=ai-system
+Group=ai-system
+NoNewPrivileges=true
+MemoryDenyWriteExecute=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/ai-system /var/log/ai-system /tmp
+PrivateTmp=true
+PrivateDevices=false
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_SETUID CAP_SETGID
+AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_SETUID CAP_SETGID
+
+# AI-specific environment
+Environment=AI_MODEL_PATH=/usr/lib/ai-system/models
+Environment=AI_CONFIG_PATH=/etc/ai-system
+Environment=AI_LOG_LEVEL=info
+
+[Install]
+WantedBy=multi-user.target
+Also=ai-voice.service ai-nlp.service

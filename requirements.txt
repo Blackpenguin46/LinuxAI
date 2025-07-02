@@ -1,0 +1,2 @@
+requests>=2.31.0
+subprocess32>=3.5.4; python_version < '3.0'
