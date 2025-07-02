@@ -1,2 +1,0 @@
-set FLOCK {@FLOCK@}
-set GCC_UNDER_TEST {@CC@}
